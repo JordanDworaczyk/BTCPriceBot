@@ -118,7 +118,7 @@ class PriceBot(object):
         cwd = os.getcwd()
         layout = \
             go.Layout(
-            title = full_name + ' Price',
+            title = full_name + ' Price on Coinbase (GDAX)',
             titlefont=dict(
                 family='Courier New, monospace',
                 size=34,
