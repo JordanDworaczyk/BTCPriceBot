@@ -61,11 +61,11 @@ class PriceBot(object):
         date = int(time.time() - WEEK)
 
         # prints out to console
-        print "Last week:  %9.0f" % date
-        print datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S')
-        print "\nNow: %9.0f" % now
-        print datetime.datetime.fromtimestamp(now).strftime('%Y-%m-%d %H:%M:%S')
-        print
+        print("Last week:  %9.0f" % date)
+        print(datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
+        print("\nNow: %9.0f" % now)
+        print(datetime.datetime.fromtimestamp(now).strftime('%Y-%m-%d %H:%M:%S'))
+        print()
 
         # parameters for grabbing specific content form cyrptowatch
         params = {'after': date, 'before': now, 'periods': HOUR}
@@ -118,7 +118,7 @@ class PriceBot(object):
         cwd = os.getcwd()
         layout = \
             go.Layout(
-            title = full_name + ' Price',
+            title = full_name + ' Price on Coinbase (GDAX)',
             titlefont=dict(
                 family='Courier New, monospace',
                 size=34,
@@ -166,7 +166,7 @@ class PriceBot(object):
                 xanchor='left', yanchor='bottom'
             )]
         )
-        print cwd
+        print(cwd)
         # combines data and layout into figure
         fig = go.Figure(data=data, layout=layout)
 
@@ -207,9 +207,9 @@ class PriceBot(object):
 
         #sleeps to allow time for plot.png to be downloaded into folder
         while os.path.exists( download_folder +coin_name+ 'plot.png' ) == False:
-            print 'Picture of chart is not yet downloaded'
+            print('Picture of chart is not yet downloaded')
             time.sleep(5)
-        print 'Picture of chart has been downloaded'
+        print('Picture of chart has been downloaded')
 
         #tweets to twitter with picture and tweet status
         api.update_with_media(download_folder+ coin_name+ 'plot.png',
@@ -219,26 +219,26 @@ class PriceBot(object):
         os.remove(download_folder+coin_name+'plot.png')
 
         #prints data to console
-        print "Last tweet sent:" + now.strftime('%Y/%m/%d/ %I:%M:%p')
-        print "Just tweeted:\n" +str(tweet)
-        print
+        print("Last tweet sent:" + now.strftime('%Y/%m/%d/ %I:%M:%p'))
+        print("Just tweeted:\n" +str(tweet))
+        print()
 
 def _findDownLoadsFolder():
     name_of_operating_system = os.name
 
     #creates download_folder's path based off of os
     if name_of_operating_system == 'nt':
-        print 'The operating System is Windows.'
+        print('The operating System is Windows.')
         download_folder = os.path.expanduser('~')+'\Downloads\\'
-        print 'The downloads folder is '+ download_folder
+        print('The downloads folder is '+ download_folder)
         browser = 'The browser is chrome.exe'
-        print browser
+        print(browser)
     else:
-        print 'The operating System is Linux'
+        print('The operating System is Linux')
         download_folder = os.path.expanduser('~')+'/Downloads/'
-        print 'The downloads folder is '+download_folder
+        print('The downloads folder is '+download_folder)
         browser = 'The browser is chromium-browser'
-        print browser
+        print(browser)
     return download_folder
 
 def _findBrowser():
@@ -246,13 +246,13 @@ def _findBrowser():
 
     #creates download_folder's path based off of os
     if name_of_operating_system == 'nt':
-        print 'The operating System is Windows.'
+        print('The operating System is Windows.')
         browser = 'chrome.exe'
-        print 'The browser is ' + browser
+        print('The browser is ' + browser)
     else:
-        print 'The operating System is Linux'
+        print('The operating System is Linux')
         browser = 'chromium-browser'
-        print 'The browser is ' + browser
+        print('The browser is ' + browser)
     return browser
 
 if __name__ == "__main__":
@@ -284,7 +284,7 @@ if __name__ == "__main__":
 
         #forces tweet to initiate on the hour
         while now % time_to_tweet > EPSILON:
-            print 'Waiting to tweet.'
+            print('Waiting to tweet.')
             now = time.time()
             round(now)
             time.sleep(MINUTE / 2)
@@ -300,7 +300,7 @@ if __name__ == "__main__":
             increasing_color = cfg[bot]['increasing_color']
             decreasing_color = cfg[bot]['decreasing_color']
 
-            print cfg
+            print(cfg)
 
             auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
             auth.set_access_token(access_key, access_secret)
@@ -320,5 +320,5 @@ if __name__ == "__main__":
         elif browser == 'chromium-browser':
             os.system('killall ' + browser)
         else:
-            print 'Cannot find browser to kill.'
-            print browser
+            print('Cannot find browser to kill.')
+            print(browser)
