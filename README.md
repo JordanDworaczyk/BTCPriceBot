@@ -5,6 +5,6 @@
 	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
 </a>
 
-Tweets the price of Bitcoint and Ethereum. 
+Tweets the price of Bitcoin and Ethereum. 
 
 See more about it works [here](https://jordandworaczyk.github.io/Pricebots/). 
