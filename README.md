@@ -4,6 +4,7 @@
 <a href="http://pricebots.enterslack.com">
 	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
 </a>
+[![Stories in Ready](https://badge.waffle.io/JordanDworaczyk/Pricebots.svg?label=ready&title=Ready)](http://waffle.io/JordanDworaczyk/Pricebots)
 
 Tweets the price of Bitcoin and Ethereum. 
 
