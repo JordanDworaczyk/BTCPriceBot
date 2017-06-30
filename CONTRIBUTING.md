@@ -12,48 +12,41 @@ Following these guidelines helps to communicate that you respect the time of the
 
  Pricebots is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into Pricebots itself.
 
-### What contributions are we not looking for?
+### What contributions are we NOT looking for?
 
-Please, don't use the issue tracker for [support questions]. Check whether the #general channel on [enter slack here] can help with your issue. Stack Overflow is also worth considering.
+Please, don't use the issue tracker for [support questions]. Check whether the #general channel on <a href="http://pricebots.enterslack.com">
+	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
+</a> can help with your issue. Stack Overflow is also worth considering.
 
 # Ground Rules
-### Set expectations for behavior (yours, and theirs).
-This includes not just how to communicate with others (being respectful, considerate, etc) but also technical responsibilities (importance of testing, project dependencies, etc). Mention and link to your code of conduct, if you have one.
 
-> Responsibilities
+### Responsibilities
 * Ensure cross-platform compatibility for every change that's accepted.
 Windows, Ubuntu/Raspberry Linux.
 * Ensure that code that goes into core meets all requirements in this
-checklist: https://gist.github.com/audreyr/4feef90445b9680475f2 (need to make one of my own one of these links)
+[checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
-* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the [Python Community Code of Conduct](https://www.python.org/psf/codeofconduct/).
+* Be welcoming to newcomers and encourage diverse new contributors from all backgrounds. See the [Community Code of Conduct](https://github.com/JordanDworaczyk/Pricebots/blob/master/CODE_OF_CONDUCT.md).
 
-[source: [cookiecutter](https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst)] **Need more inspiration?** [1] [Celery](https://github.com/celery/celery/blob/master/CONTRIBUTING.rst#community-code-of-conduct) [2] [geocoder](https://github.com/alexreisner/geocoder#contributing)
+
 
 # Your First Contribution
-Help people who are new to your project understand where they can be most helpful. This is also a good time to let people know if you follow a label convention for flagging beginner issues.
 
-> Unsure where to begin contributing to Atom? You can start by looking through these beginner and help-wanted issues:
-Beginner issues - issues which should only require a few lines of code, and a test or two.
-Help wanted issues - issues which should be a bit more involved than beginner issues.
-Both issue lists are sorted by total number of comments. While not perfect, number of comments is a reasonable proxy for impact a given change will have.
+Unsure where to begin contributing to Pricebots? You can start by looking
+through issues labeled _Ready_ and by reading the _Issue Log_:
+- **_Ready_ issues** - are issues that have been discussed. These issues have a
+solution that needs be implemented and requirements that need to be met for
+the issue to be considered closed. These issues are ready to be in Progress
+because their _Issue Logs_ have been completed during the _Discussion_ phase.
+- _**Issue Log**_ - is a comment provided with each _Ready_ issue that explains the details of the issue, a method for implementing a solution, requirements for the issue to be considered closed, and the status of the issue.
 
-[source: [Atom](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#your-first-code-contribution)] **Need more inspiration?** [1] [Read the Docs](http://docs.readthedocs.org/en/latest/contribute.html#contributing-to-development) [2] [Django](https://docs.djangoproject.com/en/dev/internals/contributing/new-contributors/#first-steps) (scroll down to "Guidelines" as well)
+_Issue Logs_ are maintained by project curators and are there to help contributors understand exactly what needs to be done for the issue to be closed. If you have any questions about an issue you can first consult the _Issue Log_, otherwise, feel free to comment, discuss, or ask questions while the issue is at any phase during the workflow.
 
-### Bonus points: Add a link to a resource for people who have never contributed to open source before.
-Here are a couple of friendly tutorials you can include: http://makeapullrequest.com/ and http://www.firsttimersonly.com/
+Are you working on your first Pull Request? You can learn all about Github from this *free* series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github).  
 
-> Working on your first Pull Request? You can learn how from this *free* series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github).
-
-[source: [React](https://github.com/facebook/react/blob/master/CONTRIBUTING.md#pull-requests)]  
-
-As a side note, it helps to use newcomer-friendly language throughout the rest of your document. Here are a couple of examples from [Active Admin](https://github.com/activeadmin/activeadmin/blob/master/CONTRIBUTING.md):
-
->At this point, you're ready to make your changes! Feel free to ask for help; everyone is a beginner at first :smile_cat:
-
->If a maintainer asks you to "rebase" your PR, they're saying that a lot of code has changed, and that you need to update your branch so it's easier to merge.
+At this point, you're ready to make your changes! Feel free to ask for help; everyone is a beginner at first :smile_cat:
 
 # Getting started
 ### Give them a quick walkthrough of how to submit a contribution.
@@ -174,3 +167,6 @@ sources
 [source: [Hoodie](https://github.com/hoodiehq/hoodie/blob/master/CONTRIBUTING.md)]
 [source: [Elasticsearch](https://github.com/elastic/elasticsearch/blob/master/CONTRIBUTING.md)] **Need more inspiration?** [1] [Devise](https://github.com/plataformatec/devise/wiki/Contributing) [2] [Geocoder](https://github.com/alexreisner/geocoder#known-issue) (“known issue”)
 [source: [Flask](https://github.com/pallets/flask/blob/master/CONTRIBUTING.rst)] **Need more inspiration?** [1] [cucumber-ruby](https://github.com/cucumber/cucumber-ruby/blob/master/CONTRIBUTING.md#about-to-create-a-new-github-issue) [2] [Read the Docs](http://read-the-docs.readthedocs.org/en/latest/open-source-philosophy.html#unsupported)
+[source: [cookiecutter](https://github.com/audreyr/cookiecutter/blob/master/CONTRIBUTING.rst)] **Need more inspiration?** [1] [Celery](https://github.com/celery/celery/blob/master/CONTRIBUTING.rst#community-code-of-conduct) [2] [geocoder](https://github.com/alexreisner/geocoder#contributing)
+[source: [Atom](https://github.com/atom/atom/blob/master/CONTRIBUTING.md#your-first-code-contribution)] **Need more inspiration?** [1] [Read the Docs](http://docs.readthedocs.org/en/latest/contribute.html#contributing-to-development) [2] [Django](https://docs.djangoproject.com/en/dev/internals/contributing/new-contributors/#first-steps) (scroll down to "Guidelines" as well)
+[source: [React](https://github.com/facebook/react/blob/master/CONTRIBUTING.md#pull-requests)]
