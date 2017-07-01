@@ -6,11 +6,11 @@ First off, thank you for considering contributing to Pricebots.
 
 ### Why should I follow the guidelines?
 
-Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
+Following these guidelines helps to communicate that you respect the time of the developers' managment and development of this open source project. In return, they should reciprocate your respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
 
 ### What contributions is the Pricebots team looking for?
 
- Pricebots is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into Pricebots itself.
+Pricebots is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests, or writing code which can be incorporated into Pricebots itself.
 
 ### What contributions are we not looking for?
 
@@ -18,13 +18,13 @@ Please, don't use the issue tracker for [support questions]. Check whether the #
 
 # Ground Rules
 ### Set expectations for behavior (yours, and theirs).
-This includes not just how to communicate with others (being respectful, considerate, etc) but also technical responsibilities (importance of testing, project dependencies, etc). Mention and link to your code of conduct, if you have one.
+This includes not solely how to communicate with others (being respectful, considerate, etc) but also technical responsibilities (importance of testing, project dependencies, etc). Mention and link to your code of conduct, if you have one.
 
 > Responsibilities
 * Ensure cross-platform compatibility for every change that's accepted.
-Windows, Ubuntu/Raspberry Linux.
-* Ensure that code that goes into core meets all requirements in this
-checklist: https://gist.github.com/audreyr/4feef90445b9680475f2 (need to make one of my own one of these links)
+(e.g., Windows, Ubuntu/Raspberry Linux).
+* Ensure the code that goes into core meets all requirements in this
+checklist: https://gist.github.com/audreyr/4feef90445b9680475f2 (need to make my own one of these links).
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
 * Keep feature versions as small as possible, preferably one new feature per version.
@@ -109,10 +109,10 @@ In order to determine whether you are dealing with a security issue, ask yoursel
 ### Tell your contributors how to file a bug report.
 You can even include a template so people can just copy-paste (again, less work for you).
 
-> When filing an issue, make sure to answer these five questions:
+> When filing an issue, be sure to answer these five questions:
 
->1. What version of Go are you using (go version)?
-2. What operating system and processor architecture are you using?
+>1. Which version of Go are you using (go version)?
+2. Which operating system and processor architecture are you using?
 3. What did you do?
 4. What did you expect to see?
 5. What did you see instead?
