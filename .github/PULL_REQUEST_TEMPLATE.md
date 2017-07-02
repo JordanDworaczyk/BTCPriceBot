@@ -25,7 +25,7 @@ _If you answered other, then please explain which platform it does not work on. 
 
 
 
-#4. Have you tested the bot without with out it crashing for a continuous 24hrs?
+#4. Have you tested the bot without it crashing for a continuous 24 hrs?
 - [ ] Yes
 - [ ] No
   - [ ] The team discussed the changes, and decided that the changes did not reqiure it.
