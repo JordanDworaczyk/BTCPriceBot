@@ -4,9 +4,11 @@ First off, thank you for taking time to consider contributing to Pricebots. Plea
 	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
 </a>
 
-Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
+Following these guidelines helps to communicate that you respect the time of the developers' managment and development of this open source project. In return, they should reciprocate your respect in addressing your issue, assessing changes, and helping you finalize your pull requests.
 
- Pricebots is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into Pricebots itself.
+### What contributions is the Pricebots team looking for?
+
+Pricebots is an open source project and we love to receive contributions from our community — you! There are many ways to contribute, from writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests, or writing code which can be incorporated into Pricebots itself.
 
 Please, don't use the issue tracker for support questions. Check whether the #general channel on <a href="http://pricebots.enterslack.com">
 	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
@@ -16,8 +18,8 @@ Please, don't use the issue tracker for support questions. Check whether the #ge
 
 ### Responsibilities
 * Ensure cross-platform compatibility for every change that's accepted.
-Windows, Ubuntu/Raspberry Linux.
-* Ensure that code that goes into core meets all requirements in this
+(e.g., Windows, Ubuntu/Raspberry Linux).
+* Ensure the code that goes into core meets all requirements in this
 [checklist](https://gist.github.com/audreyr/4feef90445b9680475f2).
 * Create issues for any major changes and enhancements that you wish to make. Discuss things transparently and get community feedback.
 * Don't add any classes to the codebase unless absolutely needed. Err on the side of using functions.
@@ -94,6 +96,7 @@ In order to determine whether you are dealing with a security issue, ask yoursel
 * Can I disable something for other people?
 
 If the answer to either of those two questions are "yes", then you're probably dealing with a security issue. Note that even if you answer "no" to both questions, you may still be dealing with a security issue, so if you're unsure, just email us at jordan.dwo@gmail.com.
+
 
 ### Bugs
 If you find a bug, then please submit an issue explaining the bug in detail.
