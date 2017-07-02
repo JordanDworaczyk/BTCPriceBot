@@ -71,7 +71,7 @@ class PriceBot(object):
         params = {'after': date, 'before': now, 'periods': HOUR}
 
         # grabs OHCL contents from cryptowatch
-        r = requests.get("https://api.cryptowat.ch/markets/coinbase/" + coin_name + "usd/ohlc",
+        r = requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/ohlc",
                         params=params)
         data = r.json()
 
@@ -177,7 +177,7 @@ class PriceBot(object):
     def updateTweet(self):
 
         #grabs contents from cryptowatch
-        r=requests.get("https://api.cryptowat.ch/markets/coinbase/" + coin_name + "usd/summary")
+        r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/summary")
         data = r.json()
 
         #finds data in contents
