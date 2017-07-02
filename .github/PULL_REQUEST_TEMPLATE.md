@@ -1,6 +1,6 @@
 Make sure that you answer each one of these questions before submitting your pull request - thank you!
 
-#1 Have you read and adhered to the [contributing guide]()?
+#1. Have you read and adhered to the [contributing guide]()?
 - [ ] Yes
 - [ ] No
 
@@ -13,7 +13,7 @@ _If you answered no to the question above, then please explain why you were unab
 
 
 
-#3 Does the changes that you made in your pull request work on Windows and Linux/Ubuntu platforms?
+#3. Does the changes that you made in your pull request work on Windows and Linux/Ubuntu platforms?
 - [ ] Yes
 - [ ] No
     - [ ] I don't have access to Windows.
@@ -25,7 +25,7 @@ _If you answered other, then please explain which platform it does not work on. 
 
 
 
-#4 Have you tested the bot without without it crashing for a continuous 24hrs?
+#4. Have you tested the bot without with out it crashing for a continuous 24hrs?
 - [ ] Yes
 - [ ] No
   - [ ] The team discussed the changes, and decided that the changes did not reqiure it.
