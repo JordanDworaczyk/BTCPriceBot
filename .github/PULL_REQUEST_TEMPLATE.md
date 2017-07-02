@@ -13,7 +13,7 @@ _If you answered no to the question above, then please explain why you were unab
 
 
 
-#3. Does the changes that you made in your pull request work on Windows and Linux/Ubuntu platforms?
+#3. Do the changes that you made in your pull request work on Windows and Linux/Ubuntu platforms?
 - [ ] Yes
 - [ ] No
     - [ ] I don't have access to Windows.
