@@ -120,7 +120,7 @@ class PriceBot(object):
             go.Layout(
             title = full_name + ' Price on Coinbase (GDAX)',
             titlefont=dict(
-                family='Courier New, monospace',
+                family='Helvetica, monospace',
                 size=34,
                 color='#7f7f7f'
                 )
@@ -132,7 +132,7 @@ class PriceBot(object):
                 title='Past Seven Days (UTC Time)<br>',
                 showgrid= True,
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica, monospace',
                     size=24,
                     color='#7f7f7f'
                 )
@@ -140,7 +140,7 @@ class PriceBot(object):
             yaxis=dict(
                 title='USD',
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica, monospace',
                     size=24,
                     color='#7f7f7f'
                 ),
@@ -152,7 +152,7 @@ class PriceBot(object):
                 x = -.1,
                 y = -.25,
                 font=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica, monospace',
                     size=12,
                     color='#7f7f7f'
                 ),
