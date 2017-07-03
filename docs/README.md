@@ -54,8 +54,7 @@ available, so you can join and take part in discussions about developement on th
 ---
 
 ![](https://pbs.twimg.com/profile_images/840073887727607810/L-Idlbln_400x400.jpg)
-### Ethereum Pricebot
-[@ETHPriceBot](https://twitter.com/EthPriceBot)
+### [Ethereum Pricebot](https://twitter.com/EthPriceBot)
 
 Tweets 24hr summary of price for [#Ethereum](https://twitter.com/hashtag/Ethereum?src=hash) every hour on the hour. Collects data from [@Coinbase](https://twitter.com/Coinbase) via [@cryptowat_ch](https://twitter.com/cryptowat_ch)
 
@@ -64,8 +63,7 @@ Tweets 24hr summary of price for [#Ethereum](https://twitter.com/hashtag/Ethereu
 ---
 ![](https://pbs.twimg.com/profile_images/861596336738652160/2lEY17t-_400x400.jpg)
 
-### Bitcoin Pricebot
-[@BTCPricebot](https://twitter.com/BTCPricebot)
+### [Bitcoin Pricebot](https://twitter.com/BTCPricebot)
 
 Tweets 24hr summary of price for [#Bitcoin](https://twitter.com/hashtag/Bitcoin?src=hash) every hour on the hour. Collects data from [@Coinbase](https://twitter.com/Coinbase) via [@cryptowat_ch](https://twitter.com/cryptowat_ch).
 
