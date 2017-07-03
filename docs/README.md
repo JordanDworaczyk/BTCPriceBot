@@ -11,7 +11,7 @@ every hour.
 
 Each status tweeted provides a 24hr summary of the price-action on a single
 exchange. The chart that Pricebots provides represents the weekly price action
-, each crypto-currency, with every candle representing an hour of
+, for each crypto-currency, with every candle representing an hour of
 price movement. The charts look like this:
 
 Ethereum Pricebot | Bitcoin Pricebot
@@ -26,7 +26,7 @@ There are plenty of ways you can contribute to Pricebots. You can retweet,
 blog, request features, or even provide your own code submissions to the
 project. Pricebots is open source and looking for people of all skill levels to
 help contribute. If you are new to open source and would like to get your feet
-wet, then this is the project for you! :sunglasses:
+wet, then this is the project for you!
 
 If you would like to contribute to Pricebots on Github you are encouraged to
 submit [issues](https://guides.github.com/features/issues/), [pull requests](https://help.github.com/articles/about-pull-requests/),
@@ -46,7 +46,7 @@ We also have
 <a href="http://ethpricebot.enterslack.com">
 	<img src='https://cdn.worldvectorlogo.com/logos/slack.svg' width='90'>
 </a>
-available, so you can join and take part in discussions about developement on the bot, or you can gossip over the latest crypto-currency news. :smile:
+available, so you can join and take part in discussions about developement on the bot, or you can gossip over the latest crypto-currency news.
 
 # Our Pricebots in Action!
 ---
@@ -55,7 +55,7 @@ available, so you can join and take part in discussions about developement on th
 
 ![](https://pbs.twimg.com/profile_images/840073887727607810/L-Idlbln_400x400.jpg)
 ### Ethereum Pricebot
-[@ETHPriceBot]((https://twitter.com/EthPriceBot)
+[@ETHPriceBot](https://twitter.com/EthPriceBot)
 
 Tweets 24hr summary of price for [#Ethereum](https://twitter.com/hashtag/Ethereum?src=hash) every hour on the hour. Collects data from [@Coinbase](https://twitter.com/Coinbase) via [@cryptowat_ch](https://twitter.com/cryptowat_ch)
 
