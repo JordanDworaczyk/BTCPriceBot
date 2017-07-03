@@ -12,7 +12,7 @@ every hour.
 Each status tweeted provides a 24hr summary of the price-action on a single
 exchange. The chart that Pricebots provides represents the weekly price action
 , of the crypto-currency, with each candle representing an hour of
-price movement. The charts looks a little something like this:
+price movement. The charts look a like this:
 
 Ethereum Pricebot | Bitcoin Pricebot
 ------------ | -------------
