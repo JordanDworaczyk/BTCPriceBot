@@ -79,8 +79,9 @@ You can also use this referral link provided [here]() for buying Bitcoin,
 Ethereum, or Litecon using [Coinbase](https://www.coinbase.com/). If you buy or sell $100 of crypto-currency through Coinbase using that link provided, then
 you and Pricebots will both receive $10 of Bitcoin. The referral link is
 provided through the project curator, Jordan Dworaczyk, and is also greatly
-appreciated. :smile:  
+appreciated.
 
+Addresses that you can send donations to below:
 ```
 
 ETH: 0x85839dEb6c87B3745490D9049f070608ab3f8f7F
