@@ -113,6 +113,7 @@ class PriceBot(object):
                                    ),
                                 showlegend = False
                                )
+                               
         # candlestick plots in plotly do not have an attribute for circle
         # legends. So, we have to make a scatter plot that in
         # order to use its legend which is circular. This is what is
@@ -151,7 +152,7 @@ class PriceBot(object):
         cwd = os.getcwd()
         layout_candlestick = \
             go.Layout(
-            title = 'GDAX: ' + full_name + ' Price',
+            title = 'GDAX: Price of ' + full_name,
             titlefont=dict(
                 family='Helvetica',
                 size=34,
