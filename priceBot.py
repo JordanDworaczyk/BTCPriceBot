@@ -110,15 +110,48 @@ class PriceBot(object):
                                     ),
                                decreasing=dict(name='<i>Bearish Hour</i>',
                                    line=dict(color= decreasing_color)
-                                   )
+                                   ),
+                                showlegend = False
                                )
-        data = [trace_candlestick]
+        # candlestick plots in plotly do not have an attribute for circle
+        # legends. So, we have to make a scatter plot that in
+        # order to use its legend which is circular. This is what is
+        # happening with `legend_increasing` and `legend_decreasing`. We make
+        # the sctter plot invisible so that it does not show up on the chart
+        legend_increasing = {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bullish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': increasing_color
+            },
+            'showlegend': True
+        }
+
+        legend_decreasing= {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bearish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': decreasing_color
+            },
+            'showlegend': True,
+            'opacity': 1
+        }
+
+        data = [trace_candlestick, legend_increasing, legend_decreasing]
 
         # attributes for plot
         cwd = os.getcwd()
         layout_candlestick = \
             go.Layout(
-            title = full_name + ' Price on Coinbase (GDAX)',
+            title = 'GDAX: ' + full_name + ' Price',
             titlefont=dict(
                 family='Helvetica',
                 size=34,
@@ -167,7 +200,7 @@ class PriceBot(object):
             )]
         )
 
-        layout = [layout_candlestick]
+        layout = layout_candlestick
 
         print(cwd)
 
