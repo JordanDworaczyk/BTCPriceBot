@@ -310,15 +310,18 @@ if __name__ == "__main__":
                 access_secret, coin_name, full_name, download_folder,
                 increasing_color, decreasing_color)
 
-            bot.plotTweet()
-            bot.updateTweet()
+            try:
+                bot.plotTweet()
+                bot.updateTweet()
 
-        time.sleep( time_to_tweet / 2 )
-        #clears chrome window to avoid openning too many tabs and crashing system
-        if browser == 'chrome.exe':
-            Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
-        elif browser == 'chromium-browser':
-            os.system('killall ' + browser)
-        else:
-            print('Cannot find browser to kill.')
-            print(browser)
+                time.sleep( time_to_tweet / 2 )
+                #clears chrome window to avoid openning too many tabs and crashing system
+                if browser == 'chrome.exe':
+                    Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
+                elif browser == 'chromium-browser':
+                    os.system('killall ' + browser)
+                else:
+                    print('Cannot find browser to kill.')
+                    print(browser)
+            except Exception as execption:
+                print(execption)
