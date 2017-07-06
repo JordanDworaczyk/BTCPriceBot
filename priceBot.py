@@ -100,7 +100,7 @@ class PriceBot(object):
             volume_data.append(candle[5])
 
         # traces the data for plot
-        trace = go.Candlestick(x=dates,
+        trace_candlestick = go.Candlestick(x=dates,
                                open=open_data,
                                high=high_data,
                                low=low_data,
@@ -112,11 +112,11 @@ class PriceBot(object):
                                    line=dict(color= decreasing_color)
                                    )
                                )
-        data = [trace]
+        data = [trace_candlestick]
 
         # attributes for plot
         cwd = os.getcwd()
-        layout = \
+        layout_candlestick = \
             go.Layout(
             title = full_name + ' Price on Coinbase (GDAX)',
             titlefont=dict(
@@ -166,7 +166,11 @@ class PriceBot(object):
                 xanchor='left', yanchor='bottom'
             )]
         )
+
+        layout = [layout_candlestick]
+
         print(cwd)
+
         # combines data and layout into figure
         fig = go.Figure(data=data, layout=layout)
 
