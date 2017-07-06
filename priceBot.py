@@ -151,7 +151,7 @@ class PriceBot(object):
 
         # attributes for plot
         cwd = os.getcwd()
-        layout_candlestick = \
+        layout = \
             go.Layout(
             title = 'GDAX: Price of ' + full_name,
             titlefont=dict(
@@ -201,8 +201,6 @@ class PriceBot(object):
                 xanchor='left', yanchor='bottom'
             )]
         )
-
-        layout = layout_candlestick
 
         print(cwd)
 
