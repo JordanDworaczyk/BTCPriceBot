@@ -185,7 +185,7 @@ class PriceBot(object):
         marketcap = data[0]['market_cap_usd']
         change = data[0]['percent_change_24h']
 
-        status = "#"+ coin_name.uper() + " 24hr Total Market Summary:\n"
+        status = "#"+ coin_name.upper() + " 24hr Total Market Summary:\n"
         last = "Last: $" + last + "\n"
         change = "Change: " + change + "%\n"
         volume = "Volume: $" + volume + "\n"
