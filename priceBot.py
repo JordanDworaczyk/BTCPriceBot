@@ -197,9 +197,7 @@ class PriceBot(object):
         print(status)
         return status
 
-    @classmethod
-    def updateTweet(self):
-
+    def getMarketSummary(self):
         #grabs contents from cryptowatch
         r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/summary")
         data = r.json()
@@ -226,6 +224,11 @@ class PriceBot(object):
         #creates string for tweet
         tweet = "#"+ coin_name.upper() +" 24hr Summary:\n" + last + high + low + percentage \
             + absolute_change + volume + "$"+coin_name.upper()+" #"+full_name+" #coinbase"
+
+        return tweet
+
+    @classmethod
+    def updateTweet(self, tweet):
 
         now = datetime.datetime.now()
 
@@ -334,10 +337,11 @@ if __name__ == "__main__":
                 access_secret, coin_name, full_name, download_folder,
                 increasing_color, decreasing_color)
 
-            status = bot.getTotalMarketStatus()
+            total_market_status = bot.getTotalMarketStatus()
+            price_summary_status = bot.getMarketSummary()
 
             bot.plotTweet()
-            bot.updateTweet()
+            bot.updateTweet(total_market_status)
 
         time.sleep( time_to_tweet / 2 )
         #clears chrome window to avoid openning too many tabs and crashing system
