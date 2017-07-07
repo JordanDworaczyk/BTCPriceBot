@@ -264,10 +264,8 @@ if __name__ == "__main__":
     if arg == 'test':
         desktop_path = os.path.expanduser('~')+'\Desktop\\'
         config_file = desktop_path + 'test.yml'
-        time_to_tweet = MINUTE
     elif arg == 'run':
         config_file = 'config.yml'
-        time_to_tweet = HOUR
 
     if when == 'hourly':
          time_to_tweet = HOUR
