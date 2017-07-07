@@ -173,6 +173,30 @@ class PriceBot(object):
         #plots figure, saves as html, saves pic of tweet into downloads folder
         offline.plot(fig, image='png',image_filename=coin_name + 'plot',auto_open=True)
 
+    def getTotalMarketStatus(self):
+        url = 'https://api.coinmarketcap.com/v1/ticker/'
+        r = requests.get(url + full_name + '/')
+        data = r.json()
+
+        print(data)
+
+        last = data[0]['price_usd']
+        volume = data[0]['24h_volume_usd']
+        marketcap = data[0]['market_cap_usd']
+        change = data[0]['percent_change_24h']
+
+        status = "24hr Total Market Summary:\n"
+        last = "Last: $" + last + "\n"
+        change = "Change: " + change + "%\n"
+        volume = "Volume: $" + volume + "\n"
+        marketcap = "Marketcap: $" +  marketcap + "\n"
+
+        status = status + last + change + volume + marketcap
+        status = status + "$" + coin_name + " #" + full_name + " #Pricebots"
+
+        print(status)
+        return status
+
     @classmethod
     def updateTweet(self):
 
@@ -309,6 +333,8 @@ if __name__ == "__main__":
             bot = PriceBot(consumer_key, consumer_secret, access_key,
                 access_secret, coin_name, full_name, download_folder,
                 increasing_color, decreasing_color)
+
+            status = bot.getTotalMarketStatus()
 
             bot.plotTweet()
             bot.updateTweet()
