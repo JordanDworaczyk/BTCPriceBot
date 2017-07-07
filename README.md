@@ -1,8 +1,8 @@
 Pricebots is a way to automatically tweet the price of crypto-currencies on Twitter.		
-----		
--		
+---		
+		
 # How it works		
- -		
+		
 Our bots pull price information from		
 [cryptowat.ch](https://cryptowat.ch). They then use		
 [plotly](https://github.com/plotly/plotly.py) to plot the price data and save		
