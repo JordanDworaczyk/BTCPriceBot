@@ -100,7 +100,7 @@ class PriceBot(object):
             volume_data.append(candle[5])
 
         # traces the data for plot
-        trace = go.Candlestick(x=dates,
+        trace_candlestick = go.Candlestick(x=dates,
                                open=open_data,
                                high=high_data,
                                low=low_data,
@@ -110,17 +110,52 @@ class PriceBot(object):
                                     ),
                                decreasing=dict(name='<i>Bearish Hour</i>',
                                    line=dict(color= decreasing_color)
-                                   )
+                                   ),
+                                showlegend = False
                                )
-        data = [trace]
+
+        # candlestick plots in plotly do not have an attribute for circle
+        # legends. So, we have to make a scatter plot that in
+        # order to use its legend which is circular. This is what is
+        # happening with `legend_increasing` and `legend_decreasing`. We make
+        # the sctter plot invisible so that it does not show up on the chart
+        legend_increasing = {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bullish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': increasing_color
+            },
+            'showlegend': True,
+            'opacity': 1
+        }
+
+        legend_decreasing= {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bearish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': decreasing_color
+            },
+            'showlegend': True,
+            'opacity': 1
+        }
+
+        data = [trace_candlestick, legend_increasing, legend_decreasing]
 
         # attributes for plot
         cwd = os.getcwd()
         layout = \
             go.Layout(
-            title = full_name + ' Price on Coinbase (GDAX)',
+            title = 'GDAX: Price of ' + full_name,
             titlefont=dict(
-                family='Courier New, monospace',
+                family='Helvetica',
                 size=34,
                 color='#7f7f7f'
                 )
@@ -132,7 +167,7 @@ class PriceBot(object):
                 title='Past Seven Days (UTC Time)<br>',
                 showgrid= True,
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=24,
                     color='#7f7f7f'
                 )
@@ -140,7 +175,7 @@ class PriceBot(object):
             yaxis=dict(
                 title='USD',
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=24,
                     color='#7f7f7f'
                 ),
@@ -152,7 +187,7 @@ class PriceBot(object):
                 x = -.1,
                 y = -.25,
                 font=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=12,
                     color='#7f7f7f'
                 ),
@@ -166,7 +201,9 @@ class PriceBot(object):
                 xanchor='left', yanchor='bottom'
             )]
         )
+
         print(cwd)
+
         # combines data and layout into figure
         fig = go.Figure(data=data, layout=layout)
 
@@ -291,10 +328,8 @@ if __name__ == "__main__":
     if arg == 'test':
         desktop_path = os.path.expanduser('~')+'\Desktop\\'
         config_file = desktop_path + 'test.yml'
-        time_to_tweet = MINUTE
     elif arg == 'run':
         config_file = 'config.yml'
-        time_to_tweet = HOUR
 
     if when == 'hourly':
          time_to_tweet = HOUR
@@ -305,50 +340,50 @@ if __name__ == "__main__":
         cfg = yaml.safe_load(ymlfile)
 
     while True:
-
-        now = time.time()
-        round(now)
-
-        #forces tweet to initiate on the hour
-        while now % time_to_tweet > EPSILON:
-            print('Waiting to tweet.')
+        try:
             now = time.time()
             round(now)
-            time.sleep(MINUTE / 2)
 
-        for bot in cfg:
-            consumer_key = cfg[bot]['consumer_key']
-            consumer_secret = cfg[bot]['consumer_secret']
-            access_key = cfg[bot]['access_key']
-            access_secret = cfg[bot]['access_secret']
-            coin_name = cfg[bot]['coin_name']
-            full_name = cfg[bot]['full_name']
-            download_folder = _findDownLoadsFolder()
-            increasing_color = cfg[bot]['increasing_color']
-            decreasing_color = cfg[bot]['decreasing_color']
+            #forces tweet to initiate on the hour
+            while now % time_to_tweet > EPSILON:
+                print('Waiting to tweet.')
+                now = time.time()
+                round(now)
+                time.sleep(MINUTE / 2)
 
-            print(cfg)
+            for bot in cfg:
+                consumer_key = cfg[bot]['consumer_key']
+                consumer_secret = cfg[bot]['consumer_secret']
+                access_key = cfg[bot]['access_key']
+                access_secret = cfg[bot]['access_secret']
+                coin_name = cfg[bot]['coin_name']
+                full_name = cfg[bot]['full_name']
+                download_folder = _findDownLoadsFolder()
+                increasing_color = cfg[bot]['increasing_color']
+                decreasing_color = cfg[bot]['decreasing_color']
 
-            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-            auth.set_access_token(access_key, access_secret)
-            api = tweepy.API(auth)
+                print(cfg)
 
-            bot = PriceBot(consumer_key, consumer_secret, access_key,
-                access_secret, coin_name, full_name, download_folder,
-                increasing_color, decreasing_color)
+                auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+                auth.set_access_token(access_key, access_secret)
+                api = tweepy.API(auth)
 
-            total_market_status = bot.getTotalMarketStatus()
-            price_summary_status = bot.getMarketSummary()
+                bot = PriceBot(consumer_key, consumer_secret, access_key,
+                    access_secret, coin_name, full_name, download_folder,
+                    increasing_color, decreasing_color)
 
-            bot.plotTweet()
-            bot.updateTweet(total_market_status)
+                bot.plotTweet()
+                bot.updateTweet()
 
-        time.sleep( time_to_tweet / 2 )
-        #clears chrome window to avoid openning too many tabs and crashing system
-        if browser == 'chrome.exe':
-            Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
-        elif browser == 'chromium-browser':
-            os.system('killall ' + browser)
-        else:
-            print('Cannot find browser to kill.')
-            print(browser)
+        except KeyError as err:
+            print(err)
+        finally:
+            time.sleep( time_to_tweet / 2 )
+            #clears chrome window to avoid openning too many tabs and crashing system
+            if browser == 'chrome.exe':
+                Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
+            elif browser == 'chromium-browser':
+                os.system('killall ' + browser)
+            else:
+                print('Cannot find browser to kill.')
+                print(browser)
