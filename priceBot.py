@@ -264,10 +264,8 @@ if __name__ == "__main__":
     if arg == 'test':
         desktop_path = os.path.expanduser('~')+'\Desktop\\'
         config_file = desktop_path + 'test.yml'
-        time_to_tweet = MINUTE
     elif arg == 'run':
         config_file = 'config.yml'
-        time_to_tweet = HOUR
 
     if when == 'hourly':
          time_to_tweet = HOUR
@@ -278,47 +276,50 @@ if __name__ == "__main__":
         cfg = yaml.safe_load(ymlfile)
 
     while True:
-
-        now = time.time()
-        round(now)
-
-        #forces tweet to initiate on the hour
-        while now % time_to_tweet > EPSILON:
-            print('Waiting to tweet.')
+        try:
             now = time.time()
             round(now)
-            time.sleep(MINUTE / 2)
 
-        for bot in cfg:
-            consumer_key = cfg[bot]['consumer_key']
-            consumer_secret = cfg[bot]['consumer_secret']
-            access_key = cfg[bot]['access_key']
-            access_secret = cfg[bot]['access_secret']
-            coin_name = cfg[bot]['coin_name']
-            full_name = cfg[bot]['full_name']
-            download_folder = _findDownLoadsFolder()
-            increasing_color = cfg[bot]['increasing_color']
-            decreasing_color = cfg[bot]['decreasing_color']
+            #forces tweet to initiate on the hour
+            while now % time_to_tweet > EPSILON:
+                print('Waiting to tweet.')
+                now = time.time()
+                round(now)
+                time.sleep(MINUTE / 2)
 
-            print(cfg)
+            for bot in cfg:
+                consumer_key = cfg[bot]['consumer_key']
+                consumer_secret = cfg[bot]['consumer_secret']
+                access_key = cfg[bot]['access_key']
+                access_secret = cfg[bot]['access_secret']
+                coin_name = cfg[bot]['coin_name']
+                full_name = cfg[bot]['full_name']
+                download_folder = _findDownLoadsFolder()
+                increasing_color = cfg[bot]['increasing_color']
+                decreasing_color = cfg[bot]['decreasing_color']
 
-            auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-            auth.set_access_token(access_key, access_secret)
-            api = tweepy.API(auth)
+                print(cfg)
 
-            bot = PriceBot(consumer_key, consumer_secret, access_key,
-                access_secret, coin_name, full_name, download_folder,
-                increasing_color, decreasing_color)
+                auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+                auth.set_access_token(access_key, access_secret)
+                api = tweepy.API(auth)
 
-            bot.plotTweet()
-            bot.updateTweet()
+                bot = PriceBot(consumer_key, consumer_secret, access_key,
+                    access_secret, coin_name, full_name, download_folder,
+                    increasing_color, decreasing_color)
 
-        time.sleep( time_to_tweet / 2 )
-        #clears chrome window to avoid openning too many tabs and crashing system
-        if browser == 'chrome.exe':
-            Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
-        elif browser == 'chromium-browser':
-            os.system('killall ' + browser)
-        else:
-            print('Cannot find browser to kill.')
-            print(browser)
+                bot.plotTweet()
+                bot.updateTweet()
+
+        except KeyError as err:
+            print(err)
+        finally:
+            time.sleep( time_to_tweet / 2 )
+            #clears chrome window to avoid openning too many tabs and crashing system
+            if browser == 'chrome.exe':
+                Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
+            elif browser == 'chromium-browser':
+                os.system('killall ' + browser)
+            else:
+                print('Cannot find browser to kill.')
+                print(browser)
