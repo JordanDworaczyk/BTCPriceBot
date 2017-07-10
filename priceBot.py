@@ -172,7 +172,7 @@ class PriceBot(object):
 
         #plots figure, saves as html, saves pic of tweet into downloads folder
         offline.plot(fig, image='png',image_filename=coin_name + 'plot',auto_open=True)
-
+    @classmethod     
     def getTotalMarketStatus(self):
         url = 'https://api.coinmarketcap.com/v1/ticker/'
         r = requests.get(url + full_name + '/')
@@ -196,7 +196,7 @@ class PriceBot(object):
 
         print(status)
         return status
-
+    @classmethod
     def getMarketSummary(self):
         #grabs contents from cryptowatch
         r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/summary")
