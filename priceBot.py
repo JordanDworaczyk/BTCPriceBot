@@ -172,7 +172,7 @@ class PriceBot(object):
 
         #plots figure, saves as html, saves pic of tweet into downloads folder
         offline.plot(fig, image='png',image_filename=coin_name + 'plot',auto_open=True)
-    @classmethod     
+    @classmethod
     def getTotalMarketStatus(self):
         url = 'https://api.coinmarketcap.com/v1/ticker/'
         r = requests.get(url + full_name + '/')
