@@ -100,7 +100,7 @@ class PriceBot(object):
             volume_data.append(candle[5])
 
         # traces the data for plot
-        trace = go.Candlestick(x=dates,
+        trace_candlestick = go.Candlestick(x=dates,
                                open=open_data,
                                high=high_data,
                                low=low_data,
@@ -110,17 +110,52 @@ class PriceBot(object):
                                     ),
                                decreasing=dict(name='<i>Bearish Hour</i>',
                                    line=dict(color= decreasing_color)
-                                   )
+                                   ),
+                                showlegend = False
                                )
-        data = [trace]
+
+        # candlestick plots in plotly do not have an attribute for circle
+        # legends. So, we have to make a scatter plot that in
+        # order to use its legend which is circular. This is what is
+        # happening with `legend_increasing` and `legend_decreasing`. We make
+        # the sctter plot invisible so that it does not show up on the chart
+        legend_increasing = {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bullish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': increasing_color
+            },
+            'showlegend': True,
+            'opacity': 1
+        }
+
+        legend_decreasing= {
+            'x':[0],
+            'y':[0],
+            'visible': 'legendonly',
+            'legendgroup' : 'group',
+            'name': 'Bearish Hour',
+            'mode': 'markers',
+            'marker': {
+                'color': decreasing_color
+            },
+            'showlegend': True,
+            'opacity': 1
+        }
+
+        data = [trace_candlestick, legend_increasing, legend_decreasing]
 
         # attributes for plot
         cwd = os.getcwd()
         layout = \
             go.Layout(
-            title = full_name + ' Price on Coinbase (GDAX)',
+            title = 'GDAX: Price of ' + full_name,
             titlefont=dict(
-                family='Courier New, monospace',
+                family='Helvetica',
                 size=34,
                 color='#7f7f7f'
                 )
@@ -132,7 +167,7 @@ class PriceBot(object):
                 title='Past Seven Days (UTC Time)<br>',
                 showgrid= True,
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=24,
                     color='#7f7f7f'
                 )
@@ -140,7 +175,7 @@ class PriceBot(object):
             yaxis=dict(
                 title='USD',
                 titlefont=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=24,
                     color='#7f7f7f'
                 ),
@@ -152,7 +187,7 @@ class PriceBot(object):
                 x = -.1,
                 y = -.25,
                 font=dict(
-                    family='Courier New, monospace',
+                    family='Helvetica',
                     size=12,
                     color='#7f7f7f'
                 ),
@@ -166,7 +201,9 @@ class PriceBot(object):
                 xanchor='left', yanchor='bottom'
             )]
         )
+
         print(cwd)
+
         # combines data and layout into figure
         fig = go.Figure(data=data, layout=layout)
 
