@@ -209,10 +209,32 @@ class PriceBot(object):
 
         #plots figure, saves as html, saves pic of tweet into downloads folder
         offline.plot(fig, image='png',image_filename=coin_name + 'plot',auto_open=True)
-
     @classmethod
-    def updateTweet(self):
+    def getTotalMarketStatus(self):
+        url = 'https://api.coinmarketcap.com/v1/ticker/'
+        r = requests.get(url + full_name + '/')
+        data = r.json()
 
+        print(data)
+
+        last = data[0]['price_usd']
+        volume = data[0]['24h_volume_usd']
+        marketcap = data[0]['market_cap_usd']
+        change = data[0]['percent_change_24h']
+
+        status = "#"+ coin_name.upper() + " 24hr Total Market Summary:\n"
+        last = "Last: $" + last + "\n"
+        change = "Change: " + change + "%\n"
+        volume = "Volume: $" + volume + "\n"
+        marketcap = "Marketcap: $" +  marketcap + "\n"
+
+        status = status + last + change + volume + marketcap
+        status = status + "$" + coin_name.upper() + " #" + full_name + " #Pricebots"
+
+        print(status)
+        return status
+    @classmethod
+    def getMarketSummary(self):
         #grabs contents from cryptowatch
         r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/summary")
         data = r.json()
@@ -239,6 +261,11 @@ class PriceBot(object):
         #creates string for tweet
         tweet = "#"+ coin_name.upper() +" 24hr Summary:\n" + last + high + low + percentage \
             + absolute_change + volume + "$"+coin_name.upper()+" #"+full_name+" #coinbase"
+
+        return tweet
+
+    @classmethod
+    def updateTweet(self, tweet):
 
         now = datetime.datetime.now()
 
