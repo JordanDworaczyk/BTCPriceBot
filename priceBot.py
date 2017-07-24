@@ -1,19 +1,17 @@
 # Jordan Dworaczyk
 # jordan.dwo@gmail.com
-# -----------------------
+# --------------------
 # The following code is designed to run mutliple instances of twitter bots.
 # The purpose of these twitter bots is to tweet the price data of different
 # cyrpto markets. The price data includes a 24hr market summary as well as a
 # candle stick OHCL chart of the past week.
 
+import os, sys
+import time, datetime
 import requests
-import time, datetime, threading, tweepy
 import plotly.offline as offline
 import plotly.graph_objs as go
-import os
-import yaml as yaml
-from subprocess import Popen
-import sys
+import tweepy
 
 WEEK = 604800
 DAY = 86400
@@ -21,132 +19,67 @@ HOUR = 3600
 MINUTE = 60
 EPSILON = MINUTE * 2
 
-def main():
-    arg = sys.argv[1]
-    when = sys.argv[2]
+class Pricebot(object):
 
-    browser = _findBrowser()
+    def __init__(self, config):
+        self.config = config
 
-    if arg == 'test':
-        desktop_path = os.path.expanduser('~')+'\Desktop\\'
-        config_file = desktop_path + 'test.yml'
-    elif arg == 'run':
-        config_file = 'config.yml'
+        self.consumer_key = self.config.getKey('consumer_key')
+        self.consumer_secret = self.config.getKey('consumer_secret')
+        self.access_key =self.config.getKey('access_key')
+        self.access_secret = self.config.getKey('access_secret')
 
-    if when == 'hourly':
-         time_to_tweet = HOUR
-    elif when == 'now':
-        time_to_tweet = MINUTE
+        self.charts = []
+        self.download_folder = self._findDownLoadsFolder()
 
-    with open(config_file, 'r') as ymlfile:
-        cfg = yaml.safe_load(ymlfile)
+        self.browser = self._findBrowser()
 
-    while True:
-        try:
-            now = time.time()
-            round(now)
+    def plotTweet(self, use_coin):
+        coin_symbol = self.config.getSymbol(use_coin)
+        candlestick = self.config.getDuration(use_coin)
 
-            #forces tweet to initiate on the hour
-            while now % time_to_tweet > EPSILON:
-                print('Waiting to tweet.')
-                now = time.time()
-                round(now)
-                time.sleep(MINUTE / 2)
-
-            for bot in cfg:
-                consumer_key = cfg[bot]['api_keys']['consumer_key']
-                consumer_secret = cfg[bot]['api_keys']['consumer_secret']
-                access_key = cfg[bot]['api_keys']['access_key']
-                access_secret = cfg[bot]['api_keys']['access_secret']
-                coin_name = cfg[bot]['coin_name']
-                full_name = cfg[bot]['full_name']
-                download_folder = _findDownLoadsFolder()
-                increasing_color = cfg[bot]['increasing_color']
-                decreasing_color = cfg[bot]['decreasing_color']
-
-                print(cfg)
-
-                auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-                auth.set_access_token(access_key, access_secret)
-                api = tweepy.API(auth)
-
-                bot = PriceBot(consumer_key, consumer_secret, access_key,
-                    access_secret, coin_name, full_name, download_folder,
-                    increasing_color, decreasing_color)
-
-                bot.plotTweet()
-                bot.updateTweet()
-
-        except KeyError as err:
-            print(err)
-        finally:
-            time.sleep( time_to_tweet / 2 )
-            #clears chrome window to avoid openning too many tabs and crashing system
-            if browser == 'chrome.exe':
-                Popen(['taskkill ', '/F',  '/IM', browser], shell=False)
-            elif browser == 'chromium-browser':
-                os.system('killall ' + browser)
-            else:
-                print('Cannot find browser to kill.')
-                print(browser)
-
-
-class PriceBot(object):
-    """The following code is designed to run mutliple instances of twitter bots.
-    The purpose of these twitter bots is to tweet the price data of different
-    cyrpto markets. The price data includes a 24hr market summary as well as a
-    candle stick OHCL chart of the past week.
-
-    Attributes:
-        CONSUMER_KEY: Twitter API Key.
-        CONSUMER_SECRET: Twitter API Key.
-        ACCESS_KEY: Twitter API Key.
-        ACCESS_SECRET: Twitter API Key.
-        coin_name: Name of coin that bot is tweeting about. Such as, BTC, ETH,
-                   LTC, ETC, etc..
-        download_folder: Folder to place picture of chart.
-    """
-
-    def __init__(self,
-                    consumer_key, consumer_secret,
-                    access_key, access_secret,
-                    coin_name, full_name, download_folder,
-                    increasing_color, decreasing_color):
-        """Return a PriceBot object with the coin_name of *coin_name* with the
-            given API keys."""
-        self.consumer_key = consumer_key
-        self.consumer_secret = consumer_secret
-        self.access_key = access_key
-        self.access_secret = access_secret
-        self.coin_name = coin_name
-        self.download_folder = download_folder
-        self.full_name = full_name
-        self.increasing_color = increasing_color
-        self.decreasing_color = decreasing_color
-
-    @classmethod
-    def plotTweet(self):
         # for getting interval of OHLC data from cyrptowatch
         now =  int(time.time())
-        date = int(time.time() - WEEK)
-
-        # prints out to console
-        print("Last week:  %9.0f" % date)
-        print(datetime.datetime.fromtimestamp(date).strftime('%Y-%m-%d %H:%M:%S'))
-        print("\nNow: %9.0f" % now)
-        print(datetime.datetime.fromtimestamp(now).strftime('%Y-%m-%d %H:%M:%S'))
-        print()
 
         # parameters for grabbing specific content form cyrptowatch
-        params = {'after': date, 'before': now, 'periods': HOUR}
+        params = {}
+        duration = 0
+        if candlestick == 'hourly':
+            date = int(time.time() - ( 2 * WEEK ))
+            duration = HOUR
+            params = {'after': date, 'before': now, 'periods': duration }
+        elif candlestick == 'daily':
+            date = int(time.time() - ( DAY * 365 ))
+            duration = DAY
+            params = {'after': date, 'before': now, 'periods': duration }
 
         # grabs OHCL contents from cryptowatch
-        r = requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/ohlc",
-                        params=params)
+        url = "https://api.cryptowat.ch/markets/gdax/" + coin_symbol +"usd/ohlc"
+
+        # makes request to cryptowatch for data
+        r = requests.get(url, params=params)
+        print('retrieving data from : ' + url )
+
         data = r.json()
 
+        self.buildPlot(use_coin, data, candlestick, duration, coin_symbol)
+
+    def buildPlot(self, use_coin, data, candlestick, duration, coin_symbol):
+        increasing_color = self.config.getColor(use_coin, 'increasing_color')
+        decreasing_color = self.config.getColor(use_coin, 'decreasing_color')
+        full_name = self.config.getName(use_coin)
+
+        titleX_axis = ''
+        candlestick_dur = ''
+        if candlestick == 'hourly':
+            titleX_axis = 'Past 14 Days (UTC Time)'
+            candlestick_dur = ' Hour '
+        elif candlestick =='daily':
+            titleX_axis = 'Past Year (UTC Time)'
+            candlestick_dur = ' Day '
+
         # puts json data into list with each element being a candle
-        data = data['result'][str(HOUR)]
+        data = data['result'][str(duration)]
 
         # initializing lists for OHCL data
         dates = list()
@@ -171,18 +104,18 @@ class PriceBot(object):
 
         # traces the data for plot
         trace_candlestick = go.Candlestick(x=dates,
-                               open=open_data,
-                               high=high_data,
-                               low=low_data,
-                               close=close_data,
-                               increasing=dict(name='<i>Bullish Hour</i>',
-                                    line=dict(color= increasing_color)
-                                    ),
-                               decreasing=dict(name='<i>Bearish Hour</i>',
-                                   line=dict(color= decreasing_color)
-                                   ),
-                                showlegend = False
-                               )
+            open=open_data,
+            high=high_data,
+            low=low_data,
+            close=close_data,
+            increasing=dict(name='<i>Bullish' + candlestick_dur + '</i>',
+                line=dict(color= increasing_color)
+            ),
+            decreasing=dict(name='<i>Bearish' + candlestick_dur + '</i>',
+                line=dict(color= decreasing_color)
+            ),
+            showlegend = False
+        )
 
         # candlestick plots in plotly do not have an attribute for circle
         # legends. So, we have to make a scatter plot that in
@@ -194,7 +127,7 @@ class PriceBot(object):
             'y':[0],
             'visible': 'legendonly',
             'legendgroup' : 'group',
-            'name': 'Bullish Hour',
+            'name': '<i>Bullish' + candlestick_dur + '</i>',
             'mode': 'markers',
             'marker': {
                 'color': increasing_color
@@ -208,7 +141,7 @@ class PriceBot(object):
             'y':[0],
             'visible': 'legendonly',
             'legendgroup' : 'group',
-            'name': 'Bearish Hour',
+            'name': '<i>Bearish' + candlestick_dur + '</i>',
             'mode': 'markers',
             'marker': {
                 'color': decreasing_color
@@ -220,21 +153,18 @@ class PriceBot(object):
         data = [trace_candlestick, legend_increasing, legend_decreasing]
 
         # attributes for plot
-        cwd = os.getcwd()
-        layout = \
-            go.Layout(
+        layout = go.Layout(
             title = 'GDAX: Price of ' + full_name,
             titlefont=dict(
                 family='Helvetica',
                 size=34,
                 color='#7f7f7f'
-                )
-            ,
+                ),
             xaxis=dict(
                 rangeslider=dict(
                     visible=False
                 ),
-                title='Past Seven Days (UTC Time)<br>',
+                title= titleX_axis + '<br>',
                 showgrid= True,
                 titlefont=dict(
                     family='Helvetica',
@@ -263,7 +193,7 @@ class PriceBot(object):
                 ),
             ),
             images=[dict(
-                source= 'https://raw.githubusercontent.com/JordanDworaczyk/EthPriceBot/master/' + coin_name + 'watermark.png',
+                source= 'https://raw.githubusercontent.com/JordanDworaczyk/EthPriceBot/master/' + coin_symbol + 'watermark.png',
                 xref='paper', yref='paper',
                 x=.95, y=-.4,
                 sizex=0.2, sizey=0.2,
@@ -272,19 +202,79 @@ class PriceBot(object):
             )]
         )
 
-        print(cwd)
-
         # combines data and layout into figure
         fig = go.Figure(data=data, layout=layout)
 
-        #plots figure, saves as html, saves pic of tweet into downloads folder
-        offline.plot(fig, image='png',image_filename=coin_name + 'plot',auto_open=True)
+        total_coins = self.config.getAllCoins()
+        img_width = 0
+        img_height = 0
+        if len(total_coins) == 1:
+            img_width = 800
+            img_height = 600
+        elif len(total_coins) == 2 or len(total_coins) == 4:
+            img_width = 600
+            img_height = 600
 
-    @classmethod
+        #plots figure, saves as html, saves pic of chart into downloads folder
+        offline.plot(fig,
+        filename=use_coin + '.html',
+        image='png',
+        image_filename = coin_symbol + use_coin + 'plot',
+        auto_open=True,
+        image_width = img_width,
+        image_height = img_height
+        )
+
     def updateTweet(self):
+        # authenticates with twitter account using tweepy
+        auth = tweepy.OAuthHandler(self.consumer_key, self.consumer_secret)
+        auth.set_access_token(self.access_key, self.access_secret)
+        api = tweepy.API(auth)
 
+        # creates string for tweet
+        tweet_time = self.config.getTimesToTweet()
+        tweet = ''
+        full_names = []
+        use_coins = []
+        for times in tweet_time:
+            coins = self.config.getCoinsToTweet(times)
+            status = self.config.getStatus(times)
+            use_coins = coins
+
+            if status == '24hMarketTweet':
+                use_coin = coins[0]
+
+                coin_symbol = self.config.getSymbol(use_coin)
+                full_name = self.config.getName(use_coin)
+
+                tweet = self._create24hTweet(use_coin, coin_symbol, full_name)
+            elif status == 'TotalMarketSummary':
+                pass # create TotalMarketSummary()
+
+        self._findChartPictures(coins)
+        # upload images and get media_ids
+        media_ids = []
+        for filename in self.charts:
+            res = api.media_upload(filename)
+            media_ids.append(res.media_id)
+
+        # tweets with status and pictures
+        api.update_status(media_ids=media_ids, status=tweet)
+
+        # removes picture from file after tweeted
+        for filename in self.charts:
+            os.remove(filename)
+
+        #prints tweet data to console
+        now = datetime.datetime.now()
+        print('\n---------------------------------\n')
+        print("Last tweet sent:" + now.strftime('%Y/%m/%d/ %I:%M:%p'))
+        print("Just tweeted:\n" +str(tweet))
+        print('\n---------------------------------\n')
+
+    def _create24hTweet(self, coin, coin_symbol, full_name):
         #grabs contents from cryptowatch
-        r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_name + "usd/summary")
+        r=requests.get("https://api.cryptowat.ch/markets/gdax/" + coin_symbol + "usd/summary")
         data = r.json()
 
         #finds data in contents
@@ -306,61 +296,60 @@ class PriceBot(object):
         absolute_change = " | $%3.2f\n" % absolute_change
         volume = "Volume: $%9.2f\n" % volume
 
+
         #creates string for tweet
-        tweet = "#"+ coin_name.upper() +" 24hr Summary:\n" + last + high + low + percentage \
-            + absolute_change + volume + "$"+coin_name.upper()+" #"+full_name+" #coinbase"
+        tweet = "#"+ coin_symbol.upper() +" 24hr Summary:\n" + last + high + low + percentage \
+            + absolute_change + volume + "$"+coin_symbol.upper()+" #"+full_name+" #Pricebots"
 
-        now = datetime.datetime.now()
+        return tweet
 
+    def _findDownLoadsFolder(self):
+        name_of_operating_system = os.name
+
+        #creates download_folder's path based off of os
+        if name_of_operating_system == 'nt':
+            print('The operating System is Windows.')
+            download_folder = os.path.expanduser('~') + '\Downloads\\'
+            print('The downloads folder is '+ download_folder)
+        else:
+            print('The operating System is Linux')
+            download_folder = os.path.expanduser('~') + '/Downloads/'
+            print('The downloads folder is '+ download_folder)
+        return download_folder
+
+    def _findBrowser(self):
+        name_of_operating_system = os.name
+
+        #creates download_folder's path based off of os
+        if name_of_operating_system == 'nt':
+            print('The operating System is Windows.')
+            browser = 'chrome.exe'
+            print('The browser is ' + browser)
+        else:
+            print('The operating System is Linux')
+            browser = 'chromium-browser'
+            print('The browser is ' + browser)
+        return browser
+
+    def _waitToDownload(self, coin, filename):
         #sleeps to allow time for plot.png to be downloaded into folder
-        while os.path.exists( download_folder +coin_name+ 'plot.png' ) == False:
+        coin_symbol = self.config.getSymbol(coin)
+
+        while os.path.exists(filename) == False:
             print('Picture of chart is not yet downloaded')
+            print('Looking for ' + filename )
             time.sleep(5)
         print('Picture of chart has been downloaded')
 
-        #tweets to twitter with picture and tweet status
-        api.update_with_media(download_folder+ coin_name+ 'plot.png',
-        status=tweet)
+    def _findChartPictures(self, coins):
+        self.charts = []
+        for coin in coins:
+            coin_symbol = self.config.getSymbol(coin)
+            filename = self.download_folder + coin_symbol + coin + 'plot.png'
+            self.charts.append(filename)
+            self._waitToDownload(coin, filename)
 
-        # removes picture from file after tweeted
-        os.remove(download_folder+coin_name+'plot.png')
-
-        #prints data to console
-        print("Last tweet sent:" + now.strftime('%Y/%m/%d/ %I:%M:%p'))
-        print("Just tweeted:\n" +str(tweet))
-        print()
-
-def _findDownLoadsFolder():
-    name_of_operating_system = os.name
-
-    #creates download_folder's path based off of os
-    if name_of_operating_system == 'nt':
-        print('The operating System is Windows.')
-        download_folder = os.path.expanduser('~')+'\Downloads\\'
-        print('The downloads folder is '+ download_folder)
-        browser = 'The browser is chrome.exe'
-        print(browser)
-    else:
-        print('The operating System is Linux')
-        download_folder = os.path.expanduser('~')+'/Downloads/'
-        print('The downloads folder is '+download_folder)
-        browser = 'The browser is chromium-browser'
-        print(browser)
-    return download_folder
-
-def _findBrowser():
-    name_of_operating_system = os.name
-
-    #creates download_folder's path based off of os
-    if name_of_operating_system == 'nt':
-        print('The operating System is Windows.')
-        browser = 'chrome.exe'
-        print('The browser is ' + browser)
-    else:
-        print('The operating System is Linux')
-        browser = 'chromium-browser'
-        print('The browser is ' + browser)
-    return browser
+        return self.charts
 
 if __name__ == "__main__":
-    main() 
+    main()

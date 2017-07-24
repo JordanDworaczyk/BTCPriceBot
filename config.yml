@@ -1,18 +1,60 @@
- 1:
-  consumer_key: secret
-  consumer_secret: secret
-  access_key: secret
-  access_secret: secret
-  coin_name: eth
-  full_name: Ethereum
-  increasing_color: "#19cf86"
-  decreasing_color: "#cf1962"
-2:
-  consumer_key: secret
-  consumer_secret: secret
-  access_key: secret
-  access_secret: secret
-  coin_name: btc
-  full_name: Bitcoin
-  increasing_color: "#187ae7"
-  decreasing_color: "#e78518"
+bot1:
+  settings:
+    1hour:
+      status: 24hMarketTweet
+      coins:
+        - coin1
+  api_keys:
+    consumer_key: secret
+    consumer_secret: secret
+    access_key: secret
+    access_secret: secret
+  currencies:
+    coin1:
+      details:
+        name: eth
+        full_name: Ethereum
+      candlesticks:
+        duration: daily
+        increasing_color: "#19cf86"
+        decreasing_color: "#cf1962"
+bot2:
+  settings:
+    1hour:
+      status: 24hMarketTweet
+      coins:
+        - coin1
+  api_keys:
+    consumer_key: secret
+    consumer_secret: secret
+    access_key: secret
+    access_secret: secret
+  currencies:
+    coin1:
+      details:
+        name: btc
+        full_name: Bitcoin
+      candlesticks:
+        duration: daily
+        increasing_color: "#187ae7"
+        decreasing_color: "#e78518"
+bot3:
+  settings:
+    1hour:
+      status: 24hMarketTweet
+      coins:
+        - coin1
+  api_keys:
+    consumer_key: secret
+    consumer_secret: secret
+    access_key: secret
+    access_secret: secret
+  currencies:
+    coin1:
+      details:
+        name: ltc
+        full_name: Litecoin
+      candlesticks:
+        duration: daily
+        increasing_color: "#5dbcd2"
+        decreasing_color: "#d2735d"
