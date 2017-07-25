@@ -294,7 +294,7 @@ class Pricebot(object):
         low = "Low: $%5.2f\n" % low
         percentage = "Change: %3.2f%%" % percentage
         absolute_change = " | $%3.2f\n" % absolute_change
-        volume = "Volume: $%.17s\n" % volume
+        volume = "Volume: $%.13s\n" % volume
 
         #creates string for tweet
         tweet = "#"+ coin_symbol.upper() +" 24hr Summary:\n" + last + high + low + percentage \
