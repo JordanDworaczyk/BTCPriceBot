@@ -78,12 +78,6 @@ class Configure:
             all_coins = self.getCoinsToTweet(time)
         return all_coins
 
-
-        for coin in self.cfg['currencies']:
-            all_coins.append(coin)
-
-        return all_coins
-
     def getSettings(self):
         settings = self.cfg['settings']
         return settings
