@@ -234,7 +234,6 @@ class Pricebot(object):
         # creates string for tweet
         tweet_time = self.config.getTimesToTweet()
         tweet = ''
-        use_coins = []
         for times in tweet_time:
             coins = self.config.getCoinsToTweet(times)
             status = self.config.getStatus(times)
@@ -333,7 +332,6 @@ class Pricebot(object):
 
     def _waitToDownload(self, coin, filename):
         #sleeps to allow time for plot.png to be downloaded into folder
-        coin_symbol = self.config.getSymbol(coin)
 
         while os.path.exists(filename) == False:
             print('Picture of chart is not yet downloaded')
