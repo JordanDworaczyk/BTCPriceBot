@@ -6,7 +6,7 @@
 # cyrpto markets. The price data includes a 24hr market summary as well as a
 # candle stick OHCL chart of the past week.
 
-import os, sys
+import os
 import time, datetime
 import requests
 import plotly.offline as offline

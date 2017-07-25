@@ -1,5 +1,4 @@
 import sys, os, time
-import requests
 import yaml as yaml
 from Pricebot import Pricebot
 from Configure import Configure
