@@ -234,7 +234,6 @@ class Pricebot(object):
         # creates string for tweet
         tweet_time = self.config.getTimesToTweet()
         tweet = ''
-        full_names = []
         use_coins = []
         for times in tweet_time:
             coins = self.config.getCoinsToTweet(times)
