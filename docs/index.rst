@@ -6,19 +6,9 @@
 Welcome to Pricebots's documentation!
 =====================================
 
-.. automodule:: Pricebots
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    installation
    Pricebots
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
