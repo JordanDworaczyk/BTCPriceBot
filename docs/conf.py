@@ -179,14 +179,14 @@ texinfo_documents = [
 # autogenerate your api docs without having to store the output in your git
 # repo. You can even cross reference your manual documentation with these
 # API references.
-#def run_apidoc(_):
-#	from sphinx.apidoc import main
-#	import os
-#	import sys
-#	sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-#	cur_dir = os.path.abspath(os.path.dirname(__file__))
-#	module = os.path.join(cur_dir,"..","Pricebots")
-#	main(['-e', '-o', cur_dir, module, '--force'])
-#
-#def setup(app):
-#	app.connect('builder-inited', run_apidoc)
+def run_apidoc(_):
+	from sphinx.apidoc import main
+	import os
+	import sys
+	sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+	cur_dir = os.path.abspath(os.path.dirname(__file__))
+	module = os.path.join(cur_dir,"..","Pricebots")
+	main(['-e', '-o', cur_dir, module, '--force'])
+
+def setup(app):
+	app.connect('builder-inited', run_apidoc)
