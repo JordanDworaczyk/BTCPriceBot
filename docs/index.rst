@@ -11,4 +11,3 @@ Welcome to Pricebots's documentation!
    :caption: Contents:
 
    installation
-   Pricebots
